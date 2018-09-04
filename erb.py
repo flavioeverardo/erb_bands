@@ -4,7 +4,7 @@ Taken from https://github.com/wil-j-wil/py_bank
 Based on Josh McDermott's Matlab filterbank code:
 http://mcdermottlab.mit.edu/Sound_Texture_Synthesis_Toolbox_v1.7.zip
 
-ERB implementation and Answer Set Programming (ASP) integration by Flavio Everardo
+ERB implementation and modification to use with Answer Set Programming (ASP) by Flavio Everardo
 flavio.everardo@cs.uni-potsdam.de
 """
 

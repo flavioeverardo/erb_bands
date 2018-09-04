@@ -5,7 +5,7 @@
 Base code implemented by Ajin Tom to read wav files and calculate the average spectrum.
 Taken from https://github.com/ajintom/auto-spatial/blob/master/final/my_algo-Ajin%E2%80%99s%20MacBook%20Pro.ipynb
 
-ERB implementation and Answer Set Programming (ASP) integration by Flavio Everardo
+ERB implementation and modification to use with Answer Set Programming (ASP) by Flavio Everardo
 flavio.everardo@cs.uni-potsdam.de
 """
 
@@ -16,8 +16,8 @@ from librosa import load, stft, magphase
 import erb as erb
 
 # Input data
-# Trach Name
-track_name = "snare" #without extension
+# Trach Name without extension
+track_name = "snare"
 
 ## STFT parameters
 sr = 44100.0       # Sample Rate
