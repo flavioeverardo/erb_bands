@@ -22,7 +22,7 @@ Tested with Python 2.7 on MacOS 10.13.2 High Sierra 64-bits).
 
 ## Usage
 ```bash
-$ python main.py
+$ python main.py --erb=40 --file=snare.wav --samples=32768
 ```
 
 ## Examples
