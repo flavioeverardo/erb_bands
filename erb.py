@@ -63,7 +63,7 @@ class EquivalentRectangularBandwidth(FilterBank):
         erb_high = self.freq2erb(self.high_lim)
         erb_lims = np.linspace(erb_low, erb_high, self.total_erb_bands + 2)
         self.cutoffs = self.erb2freq(erb_lims)
-        self.get_bands(self.total_erb_bands, self.nfreqs, self.freqs, self.cutoffs)
+        self.filters = self.get_bands(self.total_erb_bands, self.nfreqs, self.freqs, self.cutoffs)
         
     def freq2erb(self, freq_Hz):
         """
@@ -81,8 +81,9 @@ class EquivalentRectangularBandwidth(FilterBank):
 
     def get_bands(self, total_erb_bands, nfreqs, freqs, cutoffs):
         """
-        Get the erb bands, indexes and bandwidths
+        Get the erb bands, indexes, bandwidths and filter shapes
         """
+        cos_filts = np.zeros([nfreqs + 1, total_erb_bands])
         for erb in range(total_erb_bands):
             lower_cutoff   = cutoffs[erb]
             higher_cutoff  = cutoffs[erb + 2]  # adjacent filters overlap by 50%
@@ -95,3 +96,20 @@ class EquivalentRectangularBandwidth(FilterBank):
             self.erb_bands.append(erb_center)
             self.freq_index.append(index)
             self.bandwidths.append(freq_bandwidth)
+
+            lower_index  = np.min(np.where(freqs > lower_cutoff))
+            higher_index = np.max(np.where(freqs < higher_cutoff))
+            avg = (self.freq2erb(lower_cutoff) + self.freq2erb(higher_cutoff)) / 2
+            rnge = self.freq2erb(higher_cutoff) - self.freq2erb(lower_cutoff)
+            cos_filts[lower_index:higher_index + 1, erb] = np.cos((self.freq2erb(freqs[lower_index:higher_index + 1]) - avg) / rnge * np.pi)
+            
+        # add lowpass and highpass to get perfect reconstruction
+        filters = np.zeros([nfreqs + 1, total_erb_bands + 2])
+        filters[:, 1:total_erb_bands + 1] = cos_filts
+        # lowpass filter goes up to peak of first cos filter
+        higher_index = np.max(np.where(freqs < cutoffs[1]))
+        filters[:higher_index + 1, 0] = np.sqrt(1 - np.power(filters[:higher_index + 1, 1], 2))
+        # highpass filter goes down to peak of last cos filter
+        lower_index = np.min(np.where(freqs > cutoffs[total_erb_bands]))
+        filters[lower_index:nfreqs + 1, total_erb_bands + 1] = np.sqrt(1 - np.power(filters[lower_index:nfreqs + 1, total_erb_bands], 2))
+        return filters
