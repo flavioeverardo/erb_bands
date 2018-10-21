@@ -31,6 +31,8 @@ install:
   - conda update -q conda
   - conda info -a
   - pip install numpy
+  - pip install matplotlib
+  - pip install librosa
 
 script:
   - python main.py
