@@ -18,7 +18,7 @@ https://github.com/wil-j-wil/py_bank
 - [License](#license)
 
 ## Requirements
-Tested with Python 2.7 on MacOS 10.13.2 High Sierra 64-bits). 
+Tested using Travis CI under Linux and Mac OS with Python 2.7 and 3.6.
 
 ## Usage
 ```bash
