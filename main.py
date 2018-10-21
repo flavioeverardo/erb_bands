@@ -15,12 +15,17 @@ import argparse
 import textwrap
 import os
 import numpy as np
-import matplotlib
-matplotlib.use('agg')
-import matplotlib.pyplot as plt
 from librosa import load, stft, magphase
 import erb as erb
-
+import matplotlib
+from sys import platform
+if platform == "linux" or platform == "linux2":
+    # Linux
+    matplotlib.use('agg')
+elif platform == "darwin":
+    # OS X
+    matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 
 """ 
 Parse Arguments 
