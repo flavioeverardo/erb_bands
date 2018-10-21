@@ -15,6 +15,8 @@ import argparse
 import textwrap
 import os
 import numpy as np
+#import matplotlib
+#matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from librosa import load, stft, magphase
 import erb as erb
@@ -44,6 +46,8 @@ Get help/report bugs via : flavio.everardo@cs.uni-potsdam.de
                         help="Number of ERB bands (10-100). Default: 40.")
     parser.add_argument("--file", type=str, default="snare.wav",
                         help="WAV Filename")
+    parser.add_argument('--show-plot', action='store_true',
+                        help="Display plot file after save")
     return parser.parse_args()
 
 
@@ -154,7 +158,8 @@ def main():
     plt.tight_layout()
 
     plt.savefig('%s.png'%track_name)
-    plt.show()
+    if args.show_plot:
+        plt.show()
 
     
 if __name__ == '__main__':
