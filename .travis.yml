@@ -30,8 +30,8 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
+  - conda install matplotlib
   - pip install numpy
-  - pip install matplotlib
   - pip install librosa
 
 script:
