@@ -15,8 +15,9 @@ import argparse
 import textwrap
 import os
 import numpy as np
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
-plt.use_backend('agg')
 from librosa import load, stft, magphase
 import erb as erb
 
